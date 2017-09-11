@@ -1,7 +1,7 @@
 class PropertiesController < ApplicationController
-	before_action :set_property, only: [:show, :update, :destroy]
+  before_action :set_property, only: [:show, :update, :destroy]
 
-	def index
+  def index
     properties = paginate Property.all, per_page: 10   
     render json: properties, status: :ok
   end
@@ -21,22 +21,22 @@ class PropertiesController < ApplicationController
   end
 
   def destroy
-  	@property.destroy
+    @property.destroy
     head :no_content
   end
 
   def search
-  	properties = paginate Property.filter(params.slice(:property_type,:sq_ft,:price))
-  	render json: properties
+    properties = paginate Property.filter(params.slice(:property_type,:sq_ft,:price))
+    render json: properties
   end
 
-	private
+  private
 
-	def set_property
+  def set_property
     @property = Property.find(params[:id])
   end
 
-	def property_params
+  def property_params
     params.permit(:street, :city, :zip, :state, :beds, :baths, :sq_ft, :property_type, :sale_date, :price, :latitude, :longitude)
-	end	
+  end	
 end
